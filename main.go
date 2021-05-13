@@ -207,7 +207,7 @@ func CoreImage(imageName string) {
 	source, _ := os.Open(imageName) // 获取原始图片
 	defer source.Close() // 关闭原始图片
 	sourceDecode,_ ,_ := image.Decode(source) // 获取原始图片图像
-	rand.Seed(time.Now().Unix()) // 随机值设置初始状态
+	rand.Seed(time.Now().UnixNano()) // 随机值设置初始状态
 	leftRandMax :=  sourceDecode.Bounds().Dx() - templateWidth // 获取左边距的最大距离
 	topRandMax :=  sourceDecode.Bounds().Dy() - templateHeight // 获取顶边距的最大距离
 	left = rand.Intn(leftRandMax) // 随机获取左边距
@@ -280,7 +280,7 @@ func backgroundImage(imageName string)  {
  * 创建sql文件
  */
 func SqlFile()  {
-	sqlContent = "(" + strconv.Itoa(top) + "," + strconv.Itoa(left) + "," + backgroundUrl + backgroundName + "," + coreUrl + coreName + ")"
+	sqlContent += "(" + strconv.Itoa(top) + "," + strconv.Itoa(left) + "," + backgroundUrl + backgroundName + "," + coreUrl + coreName + "),"
 	sqlFileName := sqlFilePath + "images.sql"
 	sqlFile, _ := os.Create(sqlFileName)
 	defer sqlFile.Close()
